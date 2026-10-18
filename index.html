@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JOBNET MPC — AI Assistant Portal</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    body {
+      background-color: #0b0d10;
+      color: #e5e7eb;
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto 2.5rem;
+      border-bottom: 1px solid #1f2937;
+      padding-bottom: 1.25rem;
+    }
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .badge {
+      background-color: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(74, 222, 128, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      background: #4ade80;
+      border-radius: 50%;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #14171d;
+      border: 1px solid #232832;
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #3b4252;
+    }
+    .avatar-wrapper {
+      width: 100%;
+      height: 140px;
+      background: #1c2028;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .bot-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.2rem;
+    }
+    .bot-dept {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #F5A800; /* JOBNET Gold */
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 0.6rem;
+    }
+    .bot-desc {
+      font-size: 0.82rem;
+      color: #9ca3af;
+      line-height: 1.4;
+      margin-bottom: 1.25rem;
+      flex-grow: 1;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      border-top: 1px solid #1f242e;
+      padding-top: 0.85rem;
+    }
+    .tags {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .tag {
+      font-size: 0.7rem;
+      background: #1c222c;
+      color: #94a3b8;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #2d3544;
+    }
+    .open-btn {
+      background: #D71920; /* JOBNET Red */
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border-radius: 7px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: background 0.15s ease;
+      white-space: nowrap;
+    }
+    .open-btn:hover {
+      background: #b5141a;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <div class="brand-title">JOBNET MULTIPURPOSE COOPERATIVE</div>
+      <div class="brand-subtitle">Team AI Assistant Portal</div>
+    </div>
+    <div class="badge">
+      <div class="badge-dot"></div>
+      Active
+    </div>
+  </header>
+
+  <main class="grid">
+
+    <!-- Card 1: Marketing Specialist -->
+    <div class="card">
+      <div class="avatar-wrapper">
+        <span style="font-size: 3rem;">📢</span>
+      </div>
+      <div class="bot-name">Mark the Marketer</div>
+      <div class="bot-dept">Marketing & Communications</div>
+      <div class="bot-desc">
+        Drafts high-converting Facebook posts, community announcements, and Canva poster blueprints in official brand colors.
+      </div>
+      <div class="card-footer">
+        <div class="tags">
+          <span class="tag">Posters</span>
+          <span class="tag">Copy</span>
+        </div>
+        <a href="https://aistudio.google.com" target="_blank" class="open-btn">
+          Open &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- Card 2: HR Policy Guide -->
+    <div class="card">
+      <div class="avatar-wrapper">
+        <span style="font-size: 3rem;">👥</span>
+      </div>
+      <div class="bot-name">Hannah the HR Guide</div>
+      <div class="bot-dept">Human Resources & Onboarding</div>
+      <div class="bot-desc">
+        Answers questions about leave policies, employee onboarding, code of conduct, and workplace memos.
+      </div>
+      <div class="card-footer">
+        <div class="tags">
+          <span class="tag">Policy</span>
+          <span class="tag">Leaves</span>
+        </div>
+        <a href="https://aistudio.google.com" target="_blank" class="open-btn">
+          Open &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- Card 3: Finance & Loan Specialist -->
+    <div class="card">
+      <div class="avatar-wrapper">
+        <span style="font-size: 3rem;">📊</span>
+      </div>
+      <div class="bot-name">Finn the Finance Advisor</div>
+      <div class="bot-dept">Finance & Lending</div>
+      <div class="bot-desc">
+        Explains member loan products, interest amortization tables, patronage refund mechanics, and dividend rules.
+      </div>
+      <div class="card-footer">
+        <div class="tags">
+          <span class="tag">Loans</span>
+          <span class="tag">Dividends</span>
+        </div>
+        <a href="https://aistudio.google.com" target="_blank" class="open-btn">
+          Open &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- Card 4: Operations & Member Services -->
+    <div class="card">
+      <div class="avatar-wrapper">
+        <span style="font-size: 3rem;">⚙️</span>
+      </div>
+      <div class="bot-name">Ollie the Operations Lead</div>
+      <div class="bot-dept">Member Services & Admin</div>
+      <div class="bot-desc">
+        Assists with membership form verification, General Assembly notices, and committee workflow templates.
+      </div>
+      <div class="card-footer">
+        <div class="tags">
+          <span class="tag">Forms</span>
+          <span class="tag">Admin</span>
+        </div>
+        <a href="https://aistudio.google.com" target="_blank" class="open-btn">
+          Open &rarr;
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+</body>
+</html>
