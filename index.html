@@ -406,7 +406,7 @@ Tone: Direct, efficient, logistics-focused, and safety-conscious.`
       const text = input.value.trim();
       if (!text && !attachedFile) return;
 
-      const apiKey = (localStorage.getItem("jobnet_gemini_key") || "AQ.Ab8RN6IEKkiGb6K0fwpXJ0dEgXAADLr81Q4nmMrKe-YlKbYqxg").trim();
+      const apiKey = (localStorage.getItem("jobnet_gemini_key") || "").trim();
       if (!apiKey) {
         promptApiKey();
         return;
