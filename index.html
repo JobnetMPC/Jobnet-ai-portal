@@ -386,23 +386,28 @@ Tone: Direct, efficient, logistics-focused, and safety-conscious.`
           },
           body: JSON.stringify({
             system_instruction: { parts: [{ text: currentBot.prompt }] },
-            contents: chatHistory
+            contents: chatHistory,
+            generationConfig: {
+              thinkingConfig: {
+                thinkingLevel: "low"
+              }
+            }
           })
         });
 
         const data = await res.json();
         
         if (data.error) {
-          document.getElementById(loadingId).textContent = `Google API Error (${data.error.code || 'Issue'}): ${data.error.message}`;
+          document.getElementById(loadingId).textContent = `Google Error: ${data.error.message || JSON.stringify(data.error)}`;
           return;
         }
 
-        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "No response received. Check model availability or quota.";
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "No text received from Gemini.";
 
         document.getElementById(loadingId).textContent = reply;
         chatHistory.push({ role: "model", parts: [{ text: reply }] });
       } catch (err) {
-        document.getElementById(loadingId).textContent = "Network error connecting to Gemini API. Please check your internet connection.";
+        document.getElementById(loadingId).textContent = `Connection error: ${err.message}`;
       }
       msgContainer.scrollTop = msgContainer.scrollHeight;
     }
