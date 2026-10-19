@@ -4,156 +4,706 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JOBNET MPC — AI Assistant Portal</title>
+  <!-- Tailwind CSS CDN for utility classes -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Markdown parser for clean AI output rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: #0b0d10; color: #e5e7eb; min-height: 100vh; padding: 2.5rem 1.5rem; }
-    header { display: flex; justify-content: space-between; align-items: center; max-width: 1300px; margin: 0 auto 2.5rem; border-bottom: 1px solid #1f2937; padding-bottom: 1.25rem; }
-    .brand-title { font-size: 1.2rem; font-weight: 700; color: #ffffff; }
-    .brand-subtitle { font-size: 0.78rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px; }
-    .badge { background-color: rgba(34, 197, 94, 0.15); color: #4ade80; font-size: 0.8rem; font-weight: 600; padding: 0.35rem 0.85rem; border-radius: 9999px; border: 1px solid rgba(74, 222, 128, 0.3); }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1300px; margin: 0 auto; }
-    .card { background: #14171d; border: 1px solid #232832; border-radius: 14px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; }
-    .avatar-wrapper { width: 100%; height: 110px; background: #1c2028; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 2.5rem; }
-    .bot-name { font-size: 1.1rem; font-weight: 700; color: #ffffff; }
-    .bot-dept { font-size: 0.72rem; font-weight: 700; color: #F5A800; text-transform: uppercase; margin-bottom: 0.5rem; }
-    .bot-desc { font-size: 0.82rem; color: #9ca3af; line-height: 1.4; margin-bottom: 1.25rem; flex-grow: 1; }
-    .card-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #1f242e; padding-top: 0.85rem; }
-    .open-btn { background: #D71920; color: #ffffff; text-decoration: none; font-size: 0.8rem; font-weight: 600; padding: 0.45rem 1rem; border-radius: 7px; }
+    :root {
+      --jobnet-red: #D71920;
+      --jobnet-gold: #F5A800;
+      --jobnet-dark: #0b0d11;
+      --jobnet-card: #14171f;
+      --jobnet-border: #222733;
+    }
+    body {
+      background-color: var(--jobnet-dark);
+      color: #e5e7eb;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #14171f;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #2b3242;
+      border-radius: 9999px;
+    }
+    .chat-bubble-assistant p {
+      margin-bottom: 0.5rem;
+    }
+    .chat-bubble-assistant p:last-child {
+      margin-bottom: 0;
+    }
+    .chat-bubble-assistant ul, .chat-bubble-assistant ol {
+      margin-left: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .chat-bubble-assistant li {
+      list-style-type: disc;
+      margin-bottom: 0.25rem;
+    }
+    .chat-bubble-assistant strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+    .chat-bubble-assistant pre {
+      background: #090b0e;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      font-size: 0.825rem;
+      margin: 0.5rem 0;
+      border: 1px solid #232835;
+    }
   </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col selection:bg-red-900 selection:text-white">
 
-  <header>
-    <div>
-      <div class="brand-title">JOBNET MULTIPURPOSE COOPERATIVE</div>
-      <div class="brand-subtitle">Team AI Assistant Portal</div>
+  <!-- ================= TOP NAVIGATION HEADER ================= -->
+  <header class="border-b border-[#222733] bg-[#0e1117]/80 backdrop-blur sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand & Tagline -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-[#D71920] to-[#940D12] flex items-center justify-center shadow-lg shadow-red-950/40 border border-red-500/30 text-white font-black text-xl">
+          J
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-white font-extrabold text-base sm:text-lg tracking-wide">JOBNET MPC</span>
+            <span class="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-semibold tracking-wider uppercase bg-[#F5A800]/15 text-[#F5A800] border border-[#F5A800]/30">
+              Cooperative Hub
+            </span>
+          </div>
+          <p class="text-xs text-gray-400 italic">"Nurturing Your Future"</p>
+        </div>
+      </div>
+
+      <!-- Controls & Status -->
+      <div class="flex items-center gap-2 sm:gap-4">
+        <!-- Live Badge -->
+        <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          10 Bots Active
+        </div>
+
+        <!-- API Key Configuration Button -->
+        <button id="openKeyModalBtn" class="flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg bg-[#1a1f2c] hover:bg-[#252c3e] border border-[#2d3548] text-xs sm:text-sm font-medium text-gray-200 transition-colors">
+          <svg class="w-4 h-4 text-[#F5A800]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
+          </svg>
+          <span id="keyBtnLabel">Gemini API Key</span>
+        </button>
+      </div>
+
     </div>
-    <div class="badge">● Online</div>
   </header>
 
-  <main class="grid">
+  <!-- ================= MAIN CONTAINER ================= -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
 
-    <!-- 1. Aldy - Marketing -->
-    <div class="card">
-      <div class="avatar-wrapper">📢</div>
-      <div class="bot-name">Aldy</div>
-      <div class="bot-dept">Marketing Specialist</div>
-      <div class="bot-desc">Campaigns, Facebook copy, and Canva poster blueprints in official cooperative brand identity.</div>
-      <div class="card-footer">
-        <span></span>
-        <a href="https://aistudio.google.com/app/prompts?state=%7B%22ids%22:%5B%2215BgvcOPL5ha66b2XhXpiwFe4wk8Dviia%22%5D,%22action%22:%22open%22,%22userId%22:%22109109797088221107044%22,%22resourceKeys%22:%7B%7D%7D&usp=sharing" target="_blank" class="open-btn">Open &rarr;</a>
+    <!-- Hero / Welcome Banner -->
+    <div class="mb-8 p-6 rounded-2xl bg-gradient-to-r from-[#171b26] via-[#141722] to-[#0e1117] border border-[#232938] relative overflow-hidden shadow-xl">
+      <div class="absolute -right-12 -top-12 w-56 h-56 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -left-12 -bottom-12 w-56 h-56 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <div class="relative z-10 max-w-3xl">
+        <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight mb-2">
+          Internal AI Assistance Suite
+        </h1>
+        <p class="text-sm sm:text-base text-gray-300 leading-relaxed">
+          Welcome to the cooperative team workspace. Select any specialized assistant below to open an interactive, private session aligned with <span class="text-[#F5A800] font-semibold">JOBNET Multipurpose Cooperative</span> policies and statutory standards.
+        </p>
       </div>
     </div>
 
-    <!-- 2. Mau - HR -->
-    <div class="card">
-      <div class="avatar-wrapper">👥</div>
-      <div class="bot-name">Mau</div>
-      <div class="bot-dept">HR Guide</div>
-      <div class="bot-desc">Employee policies, leave benefits, labor compliance, and staff documentation.</div>
-      <div class="card-footer">
-        <span></span>
-        <a href="https://chatgpt.com/?q=You+are+Mau,+Lead+Human+Resources+Consultant+for+JOBNET+Multipurpose+Cooperative.+Please+greet+me+as+a+colleague+in+a+professional,+supportive+tone.+Introduce+your+role+in+people+operations+and+labor+standards,+list+3+key+HR+areas+you+can+assist+with,+and+ask+how+you+can+support+me+today." target="_blank" class="open-btn">Open &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 3. Ai Ai - Credit & Savings -->
-    <div class="card">
-      <div class="avatar-wrapper">💳</div>
-      <div class="bot-name">Ai Ai</div>
-      <div class="bot-dept">Credit & Savings Specialist</div>
-      <div class="bot-desc">Member loan evaluation, amortization schedules, and member savings products.</div>
-      <div class="card-footer">
-        <span></span>
-        <a href="https://chatgpt.com/?q=You+are+Ai+Ai,+Credit+and+Savings+Specialist+for+JOBNET+Multipurpose+Cooperative.+Please+greet+me+as+a+colleague+in+a+courteous,+financially+sound+tone.+Introduce+your+role+in+member+credit+assessment+and+savings+plans,+list+3+ways+you+assist+the+lending+desk,+and+ask+what+case+or+computation+we+need+to+review." target="_blank" class="open-btn">Open &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 4. Dang - Operations -->
-    <div class="card">
-      <div class="avatar-wrapper">⚙️</div>
-      <div class="bot-name">Dang</div>
-      <div class="bot-dept">Operations Lead</div>
-      <div class="bot-desc">Daily branch workflows, membership intake review, and operational admin.</div>
-      <div class="card-footer">
-        <span></span>
-        <a href="https://chatgpt.com/?q=You+are+Dang,+Operations+Lead+for+JOBNET+Multipurpose+Cooperative.+Please+greet+me+as+a+colleague+in+an+organized,+action-oriented+tone.+Introduce+your+role+in+branch+procedures+and+operational+efficiency,+list+3+operational+workflows+you+can+help+with,+and+ask+what+task+we+are+coordinating+today." target="_blank" class="open-btn">Open &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 5. Jen - Finance -->
-    <div class="card">
-      <div class="avatar-wrapper">📈</div>
-      <div class="bot-name">Jen</div>
-      <div class="bot-dept">Financial Advisor</div>
-      <div class="bot-desc">Cooperative statutory reserve allocations, patronage refunds, and budget analysis.</div>
-      <div class="card-footer">
-        <span></span>
-        <a href="https://chatgpt.com/?q=You+are+Jen,+Senior+Financial+Advisor+for+JOBNET+Multipurpose+Cooperative.+Please+greet+me+as+a+colleague+in+an+executive+financial+tone.+Introduce+your+role+in+cooperative+statutory+funds,+patronage+refunds,+and+budgeting,+list+3+key+financial+services+you+cover,+and+ask+how+you+can+assist+with+our+financial+analysis." target="_blank" class="open-btn">Open &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 6. NJ - Coconut Buying -->
-    <div class="card">
-      <div class="avatar-wrapper">🥥</div>
-      <div class="bot-name">NJ</div>
-      <div class="bot-dept">Nut Buying (Coconut)</div>
-      <div class="bot-desc">Copra moisture evaluation, whole nut grading standards, and procurement logs.</div>
-      <div class="card-footer">
-        <span></span>
-        <a href="https://chatgpt.com/?q=You+are+NJ,+Head+of+Coconut+and+Copra+Procurement+for+JOBNET+Multipurpose+Cooperative.+Please+greet+me+in+a+straightforward,+professional+agri-business+tone.+Introduce+your+role+in+raw+nut+classification+and+copra+quality+standards,+list+3+procurement+areas+you+manage,+and+ask+what+commodity+inquiry+we+have." target="_blank" class="open-btn">Open &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 7. John - Demo Farm -->
-    <div class="card">
-      <div class="avatar-wrapper">🌱</div>
-      <div class="bot-name">John</div>
-      <div class="bot-dept">Demo Farm Expert</div>
-      <div class="bot-desc">Crop planning, organic farming inputs, and agronomy field guidance.</div>
-      <div class="card-footer">
-        <span></span>
-        <a href="https://chatgpt.com/?q=You+are+John,+Agronomy+and+Demo+Farm+Expert+for+JOBNET+Multipurpose+Cooperative.+Please+greet+me+as+a+colleague+in+a+practical,+encouraging+professional+tone.+Introduce+your+role+in+sustainable+agriculture+and+field+demonstrations,+list+3+agronomic+areas+you+specialize+in,+and+ask+what+farm+or+crop+guidance+is+needed." target="_blank" class="open-btn">Open &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 8. Yong - CEO Advisor -->
-    <div class="card">
-      <div class="avatar-wrapper">🏛️</div>
-      <div class="bot-name">Yong</div>
-      <div class="bot-dept">Executive Advisor (CEO)</div>
-      <div class="bot-desc">Board resolutions, governance roadmaps, and strategic executive briefs.</div>
-      <div class="card-footer">
-        <span></span>
-        <a href="https://chatgpt.com/?q=You+are+Yong,+Executive+Strategy+Advisor+to+the+CEO+and+Board+of+Directors+at+JOBNET+Multipurpose+Cooperative.+Please+greet+me+in+an+executive,+authoritative+tone.+Introduce+your+role+in+cooperative+governance,+strategic+planning,+and+board+documentation,+list+3+areas+of+executive+support+you+provide,+and+ask+what+strategic+briefing+we+require." target="_blank" class="open-btn">Open &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 9. Vidz - Engineering -->
-    <div class="card">
-      <div class="avatar-wrapper">📐</div>
-      <div class="bot-name">Vidz</div>
-      <div class="bot-dept">Engineering Services</div>
-      <div class="bot-desc">Facility maintenance schedules, scopes of work, and equipment standards.</div>
-      <div class="card-footer">
-        <span></span>
-        <a href="https://chatgpt.com/?q=You+are+Vidz,+Lead+Engineering+Services+Specialist+for+JOBNET+Multipurpose+Cooperative.+Please+greet+me+as+a+colleague+in+a+precise,+technical+tone.+Introduce+your+role+in+facility+maintenance,+technical+specifications,+and+infrastructure+safety,+list+3+engineering+services+you+cover,+and+ask+what+facility+or+equipment+item+needs+our+review." target="_blank" class="open-btn">Open &rarr;</a>
-      </div>
-    </div>
-
-    <!-- 10. JL - Motorpool -->
-    <div class="card">
-      <div class="avatar-wrapper">🚚</div>
-      <div class="bot-name">JL</div>
-      <div class="bot-dept">Motorpool Services Guide</div>
-      <div class="bot-desc">Fleet dispatching, preventive vehicle upkeep, trip logs, and fuel tracking.</div>
-      <div class="card-footer">
-        <span></span>
-        <a href="https://chatgpt.com/?q=You+are+JL,+Motorpool+and+Logistics+Coordinator+for+JOBNET+Multipurpose+Cooperative.+Please+greet+me+as+a+colleague+in+a+clear,+efficient+logistics+tone.+Introduce+your+role+in+fleet+dispatch,+vehicle+maintenance,+and+trip+coordination,+list+3+transportation+areas+you+manage,+and+ask+what+logistics+task+we+are+scheduling." target="_blank" class="open-btn">Open &rarr;</a>
-      </div>
+    <!-- Bots Grid (10 Assistants) -->
+    <div id="botsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      <!-- Generated via JavaScript dynamically -->
     </div>
 
   </main>
 
+  <!-- ================= FOOTER ================= -->
+  <footer class="border-t border-[#1f2430] bg-[#0a0c10] py-6 text-center text-xs text-gray-500">
+    <div class="max-w-7xl mx-auto px-4">
+      <p class="font-medium text-gray-400">JOBNET Multipurpose Cooperative &bull; Established 2010</p>
+      <p class="mt-1">Powered by Google Gemini 2.5 Flash &bull; Strictly for internal staff & member operations</p>
+    </div>
+  </footer>
+
+  <!-- ================= IN-APP CHAT MODAL ================= -->
+  <div id="chatModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
+    <div class="w-full max-w-4xl h-[94vh] sm:h-[88vh] bg-[#10141c] border border-[#252c3c] rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      
+      <!-- Chat Header -->
+      <div class="px-4 sm:px-6 py-4 bg-[#151a24] border-b border-[#222838] flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-3">
+          <div id="chatBotAvatar" class="w-11 h-11 rounded-xl bg-[#1e2533] border border-[#2f394e] flex items-center justify-center text-2xl shadow">
+            📢
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 id="chatBotName" class="text-white font-bold text-base sm:text-lg">Aldy</h2>
+              <span id="chatBotDept" class="text-[11px] font-semibold text-[#F5A800] uppercase tracking-wider px-2 py-0.5 rounded bg-[#F5A800]/10 border border-[#F5A800]/20">
+                Marketing Specialist
+              </span>
+            </div>
+            <p id="chatBotTagline" class="text-xs text-gray-400">JOBNET Multipurpose Cooperative Assistant</p>
+          </div>
+        </div>
+
+        <!-- Chat Header Actions -->
+        <div class="flex items-center gap-2">
+          <button id="clearChatBtn" title="Clear current conversation" class="p-2 rounded-lg bg-[#1c2230] hover:bg-[#283144] border border-[#2a3449] text-gray-300 hover:text-white transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+          </button>
+          <button id="closeChatBtn" title="Back to Directory" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#D71920] hover:bg-[#b8141a] text-white text-xs sm:text-sm font-semibold transition">
+            <span>Close</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Chat Messages Container -->
+      <div id="messagesContainer" class="flex-grow overflow-y-auto p-4 sm:p-6 space-y-4 custom-scrollbar bg-[#0d1017]">
+        <!-- Dynamic message history will render here -->
+      </div>
+
+      <!-- Typing Indicator -->
+      <div id="typingIndicator" class="hidden px-6 py-2 bg-[#0d1017] flex items-center gap-2 text-xs text-gray-400 shrink-0">
+        <span class="w-2 h-2 rounded-full bg-[#F5A800] animate-bounce"></span>
+        <span class="w-2 h-2 rounded-full bg-[#D71920] animate-bounce [animation-delay:0.2s]"></span>
+        <span class="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:0.4s]"></span>
+        <span id="typingBotName">Assistant is reviewing cooperative guidelines...</span>
+      </div>
+
+      <!-- Chat Input Form -->
+      <div class="p-3 sm:p-4 bg-[#141823] border-t border-[#232a3c] shrink-0">
+        <form id="chatForm" class="flex items-center gap-2 sm:gap-3">
+          <input 
+            type="text" 
+            id="chatInput"
+            placeholder="Type your question or request for this assistant..." 
+            autocomplete="off"
+            class="flex-grow bg-[#090b10] border border-[#283144] focus:border-[#D71920] focus:ring-1 focus:ring-[#D71920] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 outline-none transition"
+          />
+          <button 
+            type="submit" 
+            id="sendBtn"
+            class="bg-[#D71920] hover:bg-[#b8141a] text-white px-5 py-3 rounded-xl font-bold text-sm flex items-center gap-2 shrink-0 shadow-lg shadow-red-950/40 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span>Send</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+            </svg>
+          </button>
+        </form>
+        <p class="text-[11px] text-gray-500 text-center mt-2">
+          Responses generated with Gemini 2.5 Flash grounded in JOBNET MPC cooperative standards.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= API KEY MODAL ================= -->
+  <div id="keyModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-[#131722] border border-[#283042] rounded-2xl p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="p-2 rounded-lg bg-[#F5A800]/15 text-[#F5A800] border border-[#F5A800]/30">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-white">Gemini API Key</h3>
+        </div>
+        <button id="closeKeyModalBtn" class="text-gray-400 hover:text-white p-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <p class="text-xs text-gray-300 leading-relaxed mb-4">
+        To allow your cooperative bots to answer questions directly in the browser, paste your free Gemini API key below. The key is saved safely in your browser's <code class="text-[#F5A800] bg-[#1c2230] px-1 py-0.5 rounded">localStorage</code>.
+      </p>
+
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-gray-400 mb-1">API Key</label>
+          <input 
+            type="password" 
+            id="apiKeyInput" 
+            placeholder="AIzaSy..."
+            class="w-full bg-[#0a0c10] border border-[#2b3346] rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#D71920] transition"
+          />
+        </div>
+
+        <div class="bg-[#181d2a] p-3 rounded-xl border border-[#252c3c] text-xs text-gray-400 space-y-1">
+          <p class="font-semibold text-gray-200">How to get a 100% Free Key:</p>
+          <ol class="list-decimal ml-4 space-y-0.5 text-gray-300">
+            <li>Go to <a href="https://aistudio.google.com" target="_blank" class="text-[#F5A800] hover:underline font-medium">aistudio.google.com</a>.</li>
+            <li>Click <strong>Get API key</strong> in the top sidebar.</li>
+            <li>Click <strong>Create API key</strong> and paste it here.</li>
+          </ol>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button id="clearKeyBtn" class="px-3.5 py-2 rounded-xl text-xs font-semibold text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition">
+            Remove Key
+          </button>
+          <button id="saveKeyBtn" class="bg-[#D71920] hover:bg-[#b8141a] text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition">
+            Save Key
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    /* ================= BOT DIRECTORY CONFIGURATION ================= */
+    const COOP_BOTS = [
+      {
+        id: "aldy",
+        name: "Aldy",
+        dept: "Marketing Specialist",
+        avatar: "📢",
+        desc: "Campaigns, Facebook copy, and Canva poster blueprints in official JOBNET Red (#D71920) and Gold (#F5A800) brand identity.",
+        tags: ["Posters", "Facebook", "Promos"],
+        greeting: "Good day! I am **Aldy**, Lead Marketing Specialist for **JOBNET Multipurpose Cooperative**.\n\nI am here to assist our team with:\n* **High-converting Facebook posts** and community announcements.\n* **Canva poster layout blueprints** adhering to our official brand colors.\n* **Membership recruitment drives** (featuring our standard ₱250 onboarding).\n\nWhat marketing campaign or announcement are we drafting today?",
+        systemPrompt: `You are Aldy, Lead Marketing Specialist and Campaign Strategist for JOBNET Multipurpose Cooperative (founded in 2010, motto: "Nurturing Your Future").
+Operate strictly as a member-owned cooperative entity under the CDA, NOT a commercial bank. Treat members as partners and co-owners.
+Official Branding: Primary Red (#D71920), Warm Gold (#F5A800), Crimson (#940D12), White (#FFFFFF), and Charcoal (#111111).
+Contacts: 09101258991 | jobnetmpc@gmail.com. Membership fee: ₱250.
+Provide clear copy, Canva layout blueprints with color codes, and ready-to-use Midjourney/Canva AI image prompts. Tone is professional, community-centered, clean, and direct.`
+      },
+      {
+        id: "mau",
+        name: "Mau",
+        dept: "HR Guide",
+        avatar: "👥",
+        desc: "DOLE labor standards, cooperative CDA compliance, statutory benefits (SSS, PhilHealth, Pag-IBIG), leaves, and disciplinary due process.",
+        tags: ["Labor Code", "Leaves", "Memos"],
+        greeting: "Good day! I am **Mau**, Lead HR Consultant for **JOBNET Multipurpose Cooperative**.\n\nI provide complete people operations and compliance support including:\n* **Statutory benefits & wages** (DOLE wage orders, SSS, PhilHealth, Pag-IBIG, 13th month).\n* **Mandatory leave administration** (SIL, Maternity, Paternity, Solo Parent, VAWC).\n* **Due process documentation** (Notice to Explain memos, administrative hearing guides).\n\nWhat HR or employee policy matter can I help you resolve today?",
+        systemPrompt: `You are Mau, Principal HR Consultant for JOBNET Multipurpose Cooperative (founded 2010).
+Ensure strict adherence to Philippine Labor Standards (DOLE) and CDA personnel governance. Balance worker welfare with cooperative viability.
+Cover statutory benefits (SSS, PhilHealth, Pag-IBIG, 13th month), leave laws (SIL, RA 11210, RA 8972/11861, RA 9262), and two-notice due process (NTE and Notice of Decision).
+Deliver ready-to-use memos, checklists, and evaluation forms. Maintain an objective, legally sound, and supportive tone.`
+      },
+      {
+        id: "aiai",
+        name: "Ai Ai",
+        dept: "Credit & Savings Specialist",
+        avatar: "💳",
+        desc: "5 Cs of credit, member loan underwriting, share capital buildup, time deposits, and risk mitigation.",
+        tags: ["Loans", "Amortization", "Savings"],
+        greeting: "Hello! I am **Ai Ai**, Chief Credit & Savings Specialist for **JOBNET Multipurpose Cooperative**.\n\nI am ready to help you with:\n* **Member loan evaluations** based on the 5 Cs of Credit (Character, Capacity, Capital, Collateral, Conditions).\n* **Loan amortization tables** and repayment schedules.\n* **Share capital build-up** and high-yield time deposit incentives.\n\nWhat borrower application or credit evaluation are we reviewing today?",
+        systemPrompt: `You are Ai Ai, Chief Credit & Savings Specialist for JOBNET Multipurpose Cooperative.
+Focus on equitable, member-first credit access while protecting cooperative capital reserves.
+Evaluate loans using the 5 Cs of Credit, manage Portfolio at Risk (PAR), compute amortization schedules, and structure savings plans.
+Tone is financially prudent, analytical, transparent, and fair.`
+      },
+      {
+        id: "dang",
+        name: "Dang",
+        dept: "Operations Lead",
+        avatar: "⚙️",
+        desc: "Daily branch workflows, membership intake verification, GA logistics, committee records, and SOP execution.",
+        tags: ["Branch SOPs", "Admin", "Workflows"],
+        greeting: "Greetings! I am **Dang**, Operations Lead for **JOBNET Multipurpose Cooperative**.\n\nI coordinate our day-to-day branch execution, specializing in:\n* **Standard Operating Procedures (SOPs)** for member desks and cashiering.\n* **Membership intake verification** and document routing checklists.\n* **General Assembly (GA)** operational planning and committee documentation.\n\nWhich operational workflow or administrative procedure needs attention?",
+        systemPrompt: `You are Dang, Operations Lead for JOBNET Multipurpose Cooperative.
+Guide branch efficiency, daily document routing, membership verification, GA event logistics, and committee collaboration.
+Provide step-by-step checklists, SOP templates, and meeting minutes formats. Tone is organized, proactive, and clear.`
+      },
+      {
+        id: "jen",
+        name: "Jen",
+        dept: "Financial Advisor",
+        avatar: "📈",
+        desc: "RA 9520 statutory funds (Reserve, CETF, CDF, Optional), Net Surplus computations, patronage refunds, and budgeting.",
+        tags: ["Statutory Funds", "Dividends", "Budget"],
+        greeting: "Good day! I am **Jen**, Senior Financial Advisor for **JOBNET Multipurpose Cooperative**.\n\nI oversee our cooperative financial mechanics, covering:\n* **Mandatory Statutory Fund allocations** under RA 9520 (Reserve Fund, CETF, CDF, Optional Fund).\n* **Net Surplus distribution** formulas, Patronage Refunds, and Share Capital dividends.\n* **Operating budgets** and liquidity ratio analysis.\n\nWhat financial calculation or fund distribution model shall we review?",
+        systemPrompt: `You are Jen, Senior Financial Advisor for JOBNET Multipurpose Cooperative.
+Strictly adhere to the Philippine Cooperative Code (RA 9520) regarding Net Surplus allocation: Reserve Fund (min 10%), CETF (up to 10%), Community Development Fund (min 3%), Optional Fund (up to 7%), and remaining balance for Dividends and Patronage Refunds.
+Tone is fiscally conservative, precise, strategic, and cooperative-compliant.`
+      },
+      {
+        id: "nj",
+        name: "NJ",
+        dept: "Nut Buying (Coconut)",
+        avatar: "🥥",
+        desc: "Copra moisture thresholds, whole nut classification, buying receipts, and farmer-supplier reconciliation.",
+        tags: ["Copra", "Grading", "Procurement"],
+        greeting: "Hello! I am **NJ**, Head of Coconut and Copra Procurement for **JOBNET Multipurpose Cooperative**.\n\nI can assist you with:\n* **Whole nut classification** and sizing grading standards.\n* **Copra moisture meter testing** and re-drying penalty deduction tables.\n* **Daily procurement logs** and transparent farmer buying receipts.\n\nWhat commodity batch, pricing schedule, or moisture standard are we assessing?",
+        systemPrompt: `You are NJ, Head of Coconut & Copra Procurement for JOBNET Multipurpose Cooperative.
+Provide practical, field-tested guidance on raw whole nut grading, copra moisture testing, weight deductions, and supplier records.
+Promote fair trade for local farmers while safeguarding cooperative inventory from spoilage. Tone is direct, practical, and transparent.`
+      },
+      {
+        id: "john",
+        name: "John",
+        dept: "Demo Farm Expert",
+        avatar: "🌱",
+        desc: "Sustainable tropical agriculture, coconut intercropping, organic inputs, crop schedules, and farmer field schools.",
+        tags: ["Agri", "Intercropping", "Organic"],
+        greeting: "Mabuhay! I am **John**, Agronomy & Demo Farm Specialist for **JOBNET Multipurpose Cooperative**.\n\nI guide our agricultural initiatives, specializing in:\n* **High-yield intercropping** suited for coconut plantation canopies.\n* **Organic composting**, natural pest control, and soil fertility remediation.\n* **Crop planting calendars** and demonstration farm workshop modules.\n\nWhat crop management or farm operation topic shall we work through?",
+        systemPrompt: `You are John, Agronomy & Demo Farm Operations Specialist for JOBNET Multipurpose Cooperative.
+Provide hands-on, scientifically grounded agronomic advice on sustainable tropical farming, organic inputs, soil health, and coconut intercropping.
+Deliver seasonal planting tables and farmer training outlines. Tone is encouraging, practical, and environmentally conscious.`
+      },
+      {
+        id: "yong",
+        name: "Yong",
+        dept: "Executive Advisor (CEO)",
+        avatar: "🏛️",
+        desc: "Board resolutions, cooperative governance, CDA compliance roadmaps, strategic joint ventures, and executive briefs.",
+        tags: ["Governance", "Resolutions", "BOD"],
+        greeting: "Good day. I am **Yong**, Executive Strategy Advisor to the Board of Directors and CEO of **JOBNET Multipurpose Cooperative**.\n\nI provide high-level governance guidance including:\n* **Formal Board Resolution drafting** and policy charter formulation.\n* **Cooperative Development Authority (CDA)** regulatory compliance.\n* **Long-range strategic plans** and cooperative enterprise expansion.\n\nWhat executive briefing, policy resolution, or strategic matter is before us?",
+        systemPrompt: `You are Yong, Executive Strategy Advisor to the Board and CEO of JOBNET Multipurpose Cooperative.
+Operate under democratic cooperative governance frameworks (one member, one vote) and RA 9520.
+Draft formal Board Resolutions, Executive Policy Briefs, and Strategic Action Plans. Tone is executive, authoritative, strategic, and governance-driven.`
+      },
+      {
+        id: "vidz",
+        name: "Vidz",
+        dept: "Engineering Services",
+        avatar: "📐",
+        desc: "Facility maintenance, equipment safety audits, technical scopes of work (SOW), and infrastructure upkeep.",
+        tags: ["Maintenance", "SOW", "Safety"],
+        greeting: "Good day! I am **Vidz**, Lead Engineering and Facilities Specialist for **JOBNET Multipurpose Cooperative**.\n\nI manage our physical infrastructure and technical standards, including:\n* **Facility maintenance checklists** for branches and processing facilities.\n* **Technical Scopes of Work (SOW)** and contractor bid evaluation rubrics.\n* **Workplace electrical, structural, and fire safety audits**.\n\nWhat facility, repair, or engineering spec needs review today?",
+        systemPrompt: `You are Vidz, Lead Facilities & Engineering Services Specialist for JOBNET Multipurpose Cooperative.
+Provide technical scopes of work, equipment inspection protocols, preventive maintenance schedules, and workplace safety guidelines.
+Tone is precise, safety-oriented, technical, and practical.`
+      },
+      {
+        id: "jl",
+        name: "JL",
+        dept: "Motorpool Services Guide",
+        avatar: "🚚",
+        desc: "Fleet dispatch schedules, trip tickets, preventive maintenance, driver safety, and fuel audit logs.",
+        tags: ["Fleet", "Dispatch", "Fuel Audit"],
+        greeting: "Hello! I am **JL**, Motorpool and Logistics Coordinator for **JOBNET Multipurpose Cooperative**.\n\nI ensure our cooperative fleet runs safely and cost-effectively, assisting with:\n* **Vehicle dispatch schedules** and official trip ticket tracking.\n* **Preventive vehicle maintenance** (oil, tires, brakes, engine health).\n* **Fuel efficiency logs** and hauling route optimizations.\n\nWhich vehicle, dispatch route, or maintenance log are we coordinating?",
+        systemPrompt: `You are JL, Motorpool and Logistics Coordinator for JOBNET Multipurpose Cooperative.
+Manage utility vehicles, hauling trucks, driver trip tickets, fuel consumption audits, and preventive maintenance routines.
+Tone is efficient, logistics-focused, direct, and safety-conscious.`
+      }
+    ];
+
+    /* ================= APP STATE ================= */
+    let activeBot = null;
+    let chatHistories = {}; // Keyed by bot id
+
+    // Load saved histories from localStorage
+    try {
+      const savedHistories = localStorage.getItem("jobnet_chat_histories");
+      if (savedHistories) {
+        chatHistories = JSON.parse(savedHistories);
+      }
+    } catch (e) {
+      console.error("Could not load chat history", e);
+    }
+
+    /* ================= DOM ELEMENTS ================= */
+    const botsGrid = document.getElementById("botsGrid");
+    const chatModal = document.getElementById("chatModal");
+    const closeChatBtn = document.getElementById("closeChatBtn");
+    const clearChatBtn = document.getElementById("clearChatBtn");
+    const chatBotAvatar = document.getElementById("chatBotAvatar");
+    const chatBotName = document.getElementById("chatBotName");
+    const chatBotDept = document.getElementById("chatBotDept");
+    const messagesContainer = document.getElementById("messagesContainer");
+    const chatForm = document.getElementById("chatForm");
+    const chatInput = document.getElementById("chatInput");
+    const sendBtn = document.getElementById("sendBtn");
+    const typingIndicator = document.getElementById("typingIndicator");
+    const typingBotName = document.getElementById("typingBotName");
+
+    // Key Modal Elements
+    const keyModal = document.getElementById("keyModal");
+    const openKeyModalBtn = document.getElementById("openKeyModalBtn");
+    const closeKeyModalBtn = document.getElementById("closeKeyModalBtn");
+    const apiKeyInput = document.getElementById("apiKeyInput");
+    const saveKeyBtn = document.getElementById("saveKeyBtn");
+    const clearKeyBtn = document.getElementById("clearKeyBtn");
+    const keyBtnLabel = document.getElementById("keyBtnLabel");
+
+    /* ================= INITIALIZATION ================= */
+    function init() {
+      renderBotsGrid();
+      updateKeyStatusUI();
+    }
+
+    // Render Cards
+    function renderBotsGrid() {
+      botsGrid.innerHTML = COOP_BOTS.map(bot => `
+        <div class="bg-[#131722] border border-[#212736] hover:border-[#353f56] rounded-2xl p-5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1 shadow-lg">
+          <div>
+            <div class="w-full h-24 rounded-xl bg-[#1a202e] border border-[#262f44] flex items-center justify-center text-4xl mb-4">
+              ${bot.avatar}
+            </div>
+            <h3 class="text-white font-bold text-lg mb-0.5">${bot.name}</h3>
+            <p class="text-xs font-semibold text-[#F5A800] uppercase tracking-wider mb-2.5">${bot.dept}</p>
+            <p class="text-xs text-gray-300 leading-relaxed mb-4">${bot.desc}</p>
+          </div>
+
+          <div class="border-t border-[#1d2332] pt-3.5 flex items-center justify-between gap-2 mt-auto">
+            <div class="flex flex-wrap gap-1">
+              ${bot.tags.map(t => `<span class="text-[10px] bg-[#1a202d] text-gray-400 border border-[#283246] px-2 py-0.5 rounded-md">${t}</span>`).join('')}
+            </div>
+            <button 
+              onclick="openChat('${bot.id}')"
+              class="bg-[#D71920] hover:bg-[#b8141a] text-white text-xs font-bold px-3.5 py-1.5 rounded-lg flex items-center gap-1 transition shadow shrink-0"
+            >
+              <span>Chat</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /* ================= CHAT CONTROLLER ================= */
+    window.openChat = function(botId) {
+      activeBot = COOP_BOTS.find(b => b.id === botId);
+      if (!activeBot) return;
+
+      chatBotAvatar.textContent = activeBot.avatar;
+      chatBotName.textContent = activeBot.name;
+      chatBotDept.textContent = activeBot.dept;
+      typingBotName.textContent = `${activeBot.name} is reviewing cooperative guidelines...`;
+
+      // Initialize conversation history if empty
+      if (!chatHistories[botId] || chatHistories[botId].length === 0) {
+        chatHistories[botId] = [
+          { role: "assistant", text: activeBot.greeting }
+        ];
+        saveHistories();
+      }
+
+      renderMessages();
+      chatModal.classList.remove("hidden");
+      setTimeout(() => chatInput.focus(), 100);
+    };
+
+    function closeChat() {
+      chatModal.classList.add("hidden");
+      activeBot = null;
+    }
+
+    closeChatBtn.addEventListener("click", closeChat);
+
+    clearChatBtn.addEventListener("click", () => {
+      if (!activeBot) return;
+      chatHistories[activeBot.id] = [
+        { role: "assistant", text: activeBot.greeting }
+      ];
+      saveHistories();
+      renderMessages();
+    });
+
+    function renderMessages() {
+      if (!activeBot) return;
+      const history = chatHistories[activeBot.id] || [];
+
+      messagesContainer.innerHTML = history.map(msg => {
+        const isUser = msg.role === "user";
+        return `
+          <div class="flex items-start gap-3 ${isUser ? 'flex-row-reverse' : ''}">
+            <div class="w-8 h-8 rounded-lg ${isUser ? 'bg-[#D71920]' : 'bg-[#1e2535] border border-[#2e374c]'} flex items-center justify-center text-sm shrink-0 font-bold text-white shadow">
+              ${isUser ? 'You' : activeBot.avatar}
+            </div>
+            <div class="max-w-[85%] sm:max-w-[75%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow ${
+              isUser 
+                ? 'bg-[#D71920] text-white rounded-tr-none' 
+                : 'bg-[#151a25] border border-[#242b3b] text-gray-200 rounded-tl-none chat-bubble-assistant'
+            }">
+              ${isUser ? escapeHtml(msg.text) : marked.parse(msg.text)}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    /* ================= SEND MESSAGE & GEMINI API ================= */
+    chatForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const messageText = chatInput.value.trim();
+      if (!messageText || !activeBot) return;
+
+      const apiKey = getApiKey();
+      if (!apiKey) {
+        openKeyModal();
+        return;
+      }
+
+      // Append user message
+      chatHistories[activeBot.id].push({ role: "user", text: messageText });
+      saveHistories();
+      renderMessages();
+      chatInput.value = "";
+
+      // UI state
+      setChatLoading(true);
+
+      try {
+        const reply = await callGeminiAPI(activeBot, chatHistories[activeBot.id], apiKey);
+        chatHistories[activeBot.id].push({ role: "assistant", text: reply });
+        saveHistories();
+        renderMessages();
+      } catch (err) {
+        console.error("Gemini API error:", err);
+        chatHistories[activeBot.id].push({ 
+          role: "assistant", 
+          text: `⚠️ **System Notice**: Unable to generate a response right now.\n\n*Details:* ${err.message || 'Please check your API key validity in settings or your internet connection.'}` 
+        });
+        saveHistories();
+        renderMessages();
+      } finally {
+        setChatLoading(false);
+      }
+    });
+
+    async function callGeminiAPI(bot, history, apiKey) {
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+
+      // Build conversation turns for Gemini (skip initial greeting if pure assistant)
+      const contents = [];
+      
+      history.forEach(item => {
+        contents.push({
+          role: item.role === "assistant" ? "model" : "user",
+          parts: [{ text: item.text }]
+        });
+      });
+
+      const payload = {
+        contents: contents,
+        systemInstruction: {
+          parts: [{ text: bot.systemPrompt }]
+        },
+        generationConfig: {
+          temperature: 0.6,
+          maxOutputTokens: 2048
+        }
+      };
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        const msg = errorData.error?.message || `HTTP ${response.status} ${response.statusText}`;
+        throw new Error(msg);
+      }
+
+      const data = await response.json();
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!text) {
+        throw new Error("Received an empty response from Gemini.");
+      }
+      return text;
+    }
+
+    function setChatLoading(isLoading) {
+      if (isLoading) {
+        typingIndicator.classList.remove("hidden");
+        sendBtn.disabled = true;
+        chatInput.disabled = true;
+      } else {
+        typingIndicator.classList.add("hidden");
+        sendBtn.disabled = false;
+        chatInput.disabled = false;
+        chatInput.focus();
+      }
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    /* ================= STORAGE HELPERS ================= */
+    function saveHistories() {
+      try {
+        localStorage.setItem("jobnet_chat_histories", JSON.stringify(chatHistories));
+      } catch (e) {
+        console.error("Local storage save error", e);
+      }
+    }
+
+    function getApiKey() {
+      return localStorage.getItem("jobnet_gemini_api_key") || "";
+    }
+
+    function saveApiKey(key) {
+      localStorage.setItem("jobnet_gemini_api_key", key.trim());
+      updateKeyStatusUI();
+    }
+
+    function updateKeyStatusUI() {
+      const key = getApiKey();
+      if (key) {
+        keyBtnLabel.textContent = "API Key Active ✓";
+        openKeyModalBtn.classList.remove("border-[#2d3548]");
+        openKeyModalBtn.classList.add("border-emerald-500/40", "text-emerald-300");
+      } else {
+        keyBtnLabel.textContent = "Enter Free API Key";
+        openKeyModalBtn.classList.remove("border-emerald-500/40", "text-emerald-300");
+        openKeyModalBtn.classList.add("border-[#2d3548]", "text-gray-200");
+      }
+    }
+
+    /* ================= API KEY MODAL CONTROLLERS ================= */
+    function openKeyModal() {
+      apiKeyInput.value = getApiKey();
+      keyModal.classList.remove("hidden");
+    }
+
+    function closeKeyModal() {
+      keyModal.classList.add("hidden");
+    }
+
+    openKeyModalBtn.addEventListener("click", openKeyModal);
+    closeKeyModalBtn.addEventListener("click", closeKeyModal);
+
+    saveKeyBtn.addEventListener("click", () => {
+      const val = apiKeyInput.value.trim();
+      if (!val) {
+        alert("Please enter a valid API key or click Remove Key.");
+        return;
+      }
+      saveApiKey(val);
+      closeKeyModal();
+    });
+
+    clearKeyBtn.addEventListener("click", () => {
+      localStorage.removeItem("jobnet_gemini_api_key");
+      apiKeyInput.value = "";
+      updateKeyStatusUI();
+      closeKeyModal();
+    });
+
+    function escapeHtml(str) {
+      return str.replace(/[&<>'"]/g, 
+        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+      );
+    }
+
+    // Run on load
+    window.addEventListener("DOMContentLoaded", init);
+  </script>
 </body>
 </html>
