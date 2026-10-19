@@ -358,7 +358,7 @@ Tone: Direct, efficient, logistics-focused, and safety-conscious.`
       const text = input.value.trim();
       if (!text) return;
 
-      const apiKey = localStorage.getItem("jobnet_gemini_key");
+      const apiKey = localStorage.getItem("jobnet_gemini_key") || "AQ.Ab8RN6JcHgMdK5nxZA0w3-O56fCUO5zkZ6H3LqKOsQRTNebrHw";;
       if (!apiKey) {
         promptApiKey();
         return;
