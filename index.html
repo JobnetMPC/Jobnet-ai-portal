@@ -5,147 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JOBNET MPC — AI Assistant Portal</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-    body {
-      background-color: #0b0d10;
-      color: #e5e7eb;
-      min-height: 100vh;
-      padding: 2.5rem 1.5rem;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1300px;
-      margin: 0 auto 2.5rem;
-      border-bottom: 1px solid #1f2937;
-      padding-bottom: 1.25rem;
-    }
-    .brand-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 0.5px;
-    }
-    .brand-subtitle {
-      font-size: 0.78rem;
-      color: #9ca3af;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .badge {
-      background-color: rgba(34, 197, 94, 0.15);
-      color: #4ade80;
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 0.35rem 0.85rem;
-      border-radius: 9999px;
-      border: 1px solid rgba(74, 222, 128, 0.3);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .badge-dot {
-      width: 7px;
-      height: 7px;
-      background: #4ade80;
-      border-radius: 50%;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-      max-width: 1300px;
-      margin: 0 auto;
-    }
-    .card {
-      background: #14171d;
-      border: 1px solid #232832;
-      border-radius: 14px;
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: #3b4252;
-    }
-    .avatar-wrapper {
-      width: 100%;
-      height: 120px;
-      background: #1c2028;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1rem;
-    }
-    .bot-name {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 0.2rem;
-    }
-    .bot-dept {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #F5A800; /* JOBNET Gold */
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      margin-bottom: 0.6rem;
-    }
-    .bot-desc {
-      font-size: 0.82rem;
-      color: #9ca3af;
-      line-height: 1.4;
-      margin-bottom: 1.25rem;
-      flex-grow: 1;
-    }
-    .card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      border-top: 1px solid #1f242e;
-      padding-top: 0.85rem;
-    }
-    .tags {
-      display: flex;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-    }
-    .tag {
-      font-size: 0.7rem;
-      background: #1c222c;
-      color: #94a3b8;
-      padding: 0.2rem 0.5rem;
-      border-radius: 6px;
-      border: 1px solid #2d3544;
-    }
-    .open-btn {
-      background: #D71920; /* JOBNET Red */
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 0.4rem 0.85rem;
-      border-radius: 7px;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      transition: background 0.15s ease;
-      white-space: nowrap;
-    }
-    .open-btn:hover {
-      background: #b5141a;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #0b0d10; color: #e5e7eb; min-height: 100vh; padding: 2.5rem 1.5rem; }
+    header { display: flex; justify-content: space-between; align-items: center; max-width: 1300px; margin: 0 auto 2.5rem; border-bottom: 1px solid #1f2937; padding-bottom: 1.25rem; }
+    .brand-title { font-size: 1.2rem; font-weight: 700; color: #ffffff; }
+    .brand-subtitle { font-size: 0.78rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px; }
+    .badge { background-color: rgba(34, 197, 94, 0.15); color: #4ade80; font-size: 0.8rem; font-weight: 600; padding: 0.35rem 0.85rem; border-radius: 9999px; border: 1px solid rgba(74, 222, 128, 0.3); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1300px; margin: 0 auto; }
+    .card { background: #14171d; border: 1px solid #232832; border-radius: 14px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; }
+    .avatar-wrapper { width: 100%; height: 110px; background: #1c2028; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 2.5rem; }
+    .bot-name { font-size: 1.1rem; font-weight: 700; color: #ffffff; }
+    .bot-dept { font-size: 0.72rem; font-weight: 700; color: #F5A800; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .bot-desc { font-size: 0.82rem; color: #9ca3af; line-height: 1.4; margin-bottom: 1.25rem; flex-grow: 1; }
+    .card-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #1f242e; padding-top: 0.85rem; }
+    .open-btn { background: #D71920; color: #ffffff; text-decoration: none; font-size: 0.8rem; font-weight: 600; padding: 0.45rem 1rem; border-radius: 7px; }
   </style>
 </head>
 <body>
@@ -153,133 +26,130 @@
   <header>
     <div>
       <div class="brand-title">JOBNET MULTIPURPOSE COOPERATIVE</div>
-      <div class="brand-subtitle">Department AI Bot Directory</div>
+      <div class="brand-subtitle">Team AI Assistant Portal</div>
     </div>
-    <div class="badge">
-      <div class="badge-dot"></div>
-      10 Active Assistants
-    </div>
+    <div class="badge">● Online</div>
   </header>
 
   <main class="grid">
 
-    <!-- 1. Aldy - Marketing Specialist -->
+    <!-- 1. Aldy - Marketing -->
     <div class="card">
-      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">📢</span></div>
+      <div class="avatar-wrapper">📢</div>
       <div class="bot-name">Aldy</div>
       <div class="bot-dept">Marketing Specialist</div>
-      <div class="bot-desc">Creates Facebook campaign copy, member recruitment promos, community flyers, and Canva design briefs in official brand colors.</div>
+      <div class="bot-desc">Campaigns, Facebook copy, and Canva poster blueprints in JOBNET brand colors.</div>
       <div class="card-footer">
-        <div class="tags"><span class="tag">Posters</span><span class="tag">Campaigns</span></div>
-        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
+        <span></span>
+        <a href="https://chatgpt.com/?q=You+are+Aldy,+Lead+Marketing+Specialist+for+JOBNET+Multipurpose+Cooperative+(Brand+Colors:+Red+%23D71920,+Gold+%23F5A800,+Tagline:+Nurturing+Your+Future).+Help+me+with+this+marketing+task:" target="_blank" class="open-btn">Open &rarr;</a>
       </div>
     </div>
 
-    <!-- 2. Mau - HR Guide -->
+    <!-- 2. Mau - HR -->
     <div class="card">
-      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">👥</span></div>
+      <div class="avatar-wrapper">👥</div>
       <div class="bot-name">Mau</div>
       <div class="bot-dept">HR Guide</div>
-      <div class="bot-desc">Assists with employee handbook inquiries, leave balance policies, staff onboarding, memos, and labor compliance workflows.</div>
+      <div class="bot-desc">Employee policies, leave questions, labor standards, and staff memos.</div>
       <div class="card-footer">
-        <div class="tags"><span class="tag">Policies</span><span class="tag">Onboarding</span></div>
-        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
+        <span></span>
+        <a href="https://chatgpt.com/?q=You+are+Mau,+the+Lead+HR+Consultant+for+JOBNET+Multipurpose+Cooperative.+Provide+expert+guidance+on+employee+policies,+DOLE+labor+standards,+and+HR+workflows+for+the+following+task:" target="_blank" class="open-btn">Open &rarr;</a>
       </div>
     </div>
 
-    <!-- 3. Ai Ai - Credit & Savings Specialist -->
+    <!-- 3. Ai Ai - Credit & Savings -->
     <div class="card">
-      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">💳</span></div>
+      <div class="avatar-wrapper">💳</div>
       <div class="bot-name">Ai Ai</div>
       <div class="bot-dept">Credit & Savings Specialist</div>
-      <div class="bot-desc">Handles member loan evaluation criteria, savings plans, share capital buildup, amortization computation, and credit guidelines.</div>
+      <div class="bot-desc">Member loan evaluation, interest amortization, and savings plans.</div>
       <div class="card-footer">
-        <div class="tags"><span class="tag">Loans</span><span class="tag">Savings</span></div>
-        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
+        <span></span>
+        <a href="https://chatgpt.com/?q=You+are+Ai+Ai,+the+Credit+and+Savings+Specialist+for+JOBNET+Multipurpose+Cooperative.+Help+me+evaluate+loans,+calculate+amortization,+and+structure+savings+for+the+following:" target="_blank" class="open-btn">Open &rarr;</a>
       </div>
     </div>
 
-    <!-- 4. Dang - Operations Lead -->
+    <!-- 4. Dang - Operations -->
     <div class="card">
-      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">⚙️</span></div>
+      <div class="avatar-wrapper">⚙️</div>
       <div class="bot-name">Dang</div>
       <div class="bot-dept">Operations Lead</div>
-      <div class="bot-desc">Coordinates daily branch procedures, member application verifications, operational logistics, and general admin workflows.</div>
+      <div class="bot-desc">Daily branch procedures, member applications, and operational admin.</div>
       <div class="card-footer">
-        <div class="tags"><span class="tag">Admin</span><span class="tag">Logistics</span></div>
-        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
+        <span></span>
+        <a href="https://chatgpt.com/?q=You+are+Dang,+the+Operations+Lead+for+JOBNET+Multipurpose+Cooperative.+Help+me+with+daily+branch+procedures,+admin+tasks,+and+operational+checklists+for+the+following:" target="_blank" class="open-btn">Open &rarr;</a>
       </div>
     </div>
 
-    <!-- 5. Jen - Financial Advisor -->
+    <!-- 5. Jen - Finance -->
     <div class="card">
-      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">📈</span></div>
+      <div class="avatar-wrapper">📈</div>
       <div class="bot-name">Jen</div>
       <div class="bot-dept">Financial Advisor</div>
-      <div class="bot-desc">Advises on cooperative financial health, patronage refund distributions, dividend calculations, and strategic budgeting.</div>
+      <div class="bot-desc">Coop statutory funds, patronage refunds, and dividend formulas.</div>
       <div class="card-footer">
-        <div class="tags"><span class="tag">Dividends</span><span class="tag">Budget</span></div>
-        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
+        <span></span>
+        <a href="https://chatgpt.com/?q=You+are+Jen,+Senior+Financial+Advisor+for+JOBNET+Multipurpose+Cooperative.+Provide+clear+financial+analysis,+patronage+refund+computations,+and+budgeting+advice+for:" target="_blank" class="open-btn">Open &rarr;</a>
       </div>
     </div>
 
-    <!-- 6. NJ - Nut Buying (Coconut Buying) -->
+    <!-- 6. NJ - Coconut Buying -->
     <div class="card">
-      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">🥥</span></div>
+      <div class="avatar-wrapper">🥥</div>
       <div class="bot-name">NJ</div>
       <div class="bot-dept">Nut Buying (Coconut)</div>
-      <div class="bot-desc">Manages coconut procurement pricing, copra weight standards, moisture testing thresholds, buying receipts, and supplier logs.</div>
+      <div class="bot-desc">Copra moisture tables, whole nut grading, and farmer buying logs.</div>
       <div class="card-footer">
-        <div class="tags"><span class="tag">Procurement</span><span class="tag">Grading</span></div>
-        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
+        <span></span>
+        <a href="https://chatgpt.com/?q=You+are+NJ,+Head+of+Coconut+and+Copra+Procurement+for+JOBNET+Multipurpose+Cooperative.+Help+me+with+pricing,+copra+moisture+penalties,+and+supplier+grading+for:" target="_blank" class="open-btn">Open &rarr;</a>
       </div>
     </div>
 
-    <!-- 7. John - Demo Farm Expert -->
+    <!-- 7. John - Demo Farm -->
     <div class="card">
-      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">🌱</span></div>
+      <div class="avatar-wrapper">🌱</div>
       <div class="bot-name">John</div>
       <div class="bot-dept">Demo Farm Expert</div>
-      <div class="bot-desc">Provides agricultural best practices, crop monitoring guidelines, organic fertilizer management, harvest schedules, and demo farm logs.</div>
+      <div class="bot-desc">Crop schedules, organic farming methods, and agronomy advice.</div>
       <div class="card-footer">
-        <div class="tags"><span class="tag">Agri</span><span class="tag">Harvest</span></div>
-        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
+        <span></span>
+        <a href="https://chatgpt.com/?q=You+are+John,+Agronomy+and+Demo+Farm+Expert+for+JOBNET+Multipurpose+Cooperative.+Provide+practical+sustainable+farming+and+crop+guidance+for:" target="_blank" class="open-btn">Open &rarr;</a>
       </div>
     </div>
 
-    <!-- 8. Yong - Executive Advisor (CEO) -->
+    <!-- 8. Yong - CEO Advisor -->
     <div class="card">
-      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">🏛️</span></div>
+      <div class="avatar-wrapper">🏛️</div>
       <div class="bot-name">Yong</div>
       <div class="bot-dept">Executive Advisor (CEO)</div>
-      <div class="bot-desc">Assists leadership with board resolutions, long-term strategic plans, partnership proposals, CDA compliance, and executive reviews.</div>
+      <div class="bot-desc">Board resolutions, executive strategy, and CDA compliance roadmaps.</div>
       <div class="card-footer">
-        <div class="tags"><span class="tag">Governance</span><span class="tag">BOD</span></div>
-        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
+        <span></span>
+        <a href="https://chatgpt.com/?q=You+are+Yong,+Executive+Strategy+Advisor+to+the+CEO+and+Board+of+JOBNET+Multipurpose+Cooperative.+Draft+executive+resolutions+and+strategic+guidance+for:" target="_blank" class="open-btn">Open &rarr;</a>
       </div>
     </div>
 
-    <!-- 9. Vidz - Engineering Services -->
+    <!-- 9. Vidz - Engineering -->
     <div class="card">
-      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">📐</span></div>
+      <div class="avatar-wrapper">📐</div>
       <div class="bot-name">Vidz</div>
       <div class="bot-dept">Engineering Services</div>
-      <div class="bot-desc">Drafts technical scopes of work, facility maintenance checklists, equipment inspection logs, and cooperative infrastructure plans.</div>
+      <div class="bot-desc">Facility maintenance, scopes of work, and equipment inspection logs.</div>
       <div class="card-footer">
-        <div class="tags"><span class="tag">Maintenance</span><span class="tag">Tech Specs</span></div>
-        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
+        <span></span>
+        <a href="https://chatgpt.com/?q=You+are+Vidz,+Lead+Engineering+Services+Specialist+for+JOBNET+Multipurpose+Cooperative.+Provide+maintenance+schedules,+SOW+drafts,+and+technical+specs+for:" target="_blank" class="open-btn">Open &rarr;</a>
       </div>
     </div>
 
-    <!-- 10. JL - Motorpool Services Guide -->
+    <!-- 10. JL - Motorpool -->
     <div class="card">
-      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">🚚</span></div>
+      <div class="avatar-wrapper">🚚</div>
       <div class="bot-name">JL</div>
       <div class="bot-dept">Motorpool Services Guide</div>
-      <div class="bot-desc">Coordinates fleet dispatch schedules, vehicle preventive maintenance, fuel consumption auditing, and driver trip logs.</div>
+      <div class="bot-desc">Fleet dispatch, trip tickets, preventive maintenance, and fuel logs.</div>
       <div class="card-footer">
-        <div class="tags"><span class="tag">Fleet</span><span class="tag">Maintenance</span></div>
-        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
+        <span></span>
+        <a href="https://chatgpt.com/?q=You+are+JL,+Motorpool+and+Fleet+Coordinator+for+JOBNET+Multipurpose+Cooperative.+Provide+dispatch+schedules,+maintenance+checklists,+and+fuel+audit+guidance+for:" target="_blank" class="open-btn">Open &rarr;</a>
       </div>
     </div>
 
