@@ -18,6 +18,7 @@
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1300px; margin: 0 auto; }
     .card { background: #14171d; border: 1px solid #232832; border-radius: 14px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: 0.2s; }
     .card:hover { transform: translateY(-4px); border-color: #3b4252; }
+    .card.lead-coo { border-color: #F5A800; background: linear-gradient(180deg, #181d26 0%, #14171d 100%); }
     .avatar-wrapper { width: 100%; height: 110px; background: #1c2028; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 2.5rem; }
     .bot-name { font-size: 1.1rem; font-weight: 700; color: #ffffff; }
     .bot-dept { font-size: 0.72rem; font-weight: 700; color: #F5A800; text-transform: uppercase; margin-bottom: 0.5rem; }
@@ -78,7 +79,7 @@
     <div class="chat-box">
       <div class="chat-header">
         <div class="chat-header-info">
-          <div class="chat-header-avatar" id="modalAvatar">🤖</div>
+          <div class="chat-header-avatar" id="modalAvatar">⚙️</div>
           <div>
             <div class="chat-header-title" id="modalTitle">Assistant</div>
             <div class="chat-header-sub" id="modalDept">Department</div>
@@ -104,7 +105,36 @@
   </div>
 
   <script>
+    // Embedded API key fallback
+    const DEFAULT_API_KEY = "AQ.Ab8RN6IEKkiGb6K0fwpXJ0dEgXAADLr81Q4nmMrKe-YlKbYqxg";
+
     const BOTS = [
+      {
+        id: "dang",
+        name: "Dang",
+        dept: "Chief Operating Officer (COO)",
+        desc: "Master operational conductor. Orchestrates all branches, aligns department leads, resolves operational bottlenecks, and executes strategic plans.",
+        avatar: "⚙️",
+        isLead: true,
+        prompt: `You are Dang, the Chief Operating Officer (COO) and General Manager of Operations for JOBNET Multipurpose Cooperative (founded in 2010, motto: "Nurturing Your Future").
+
+Core Operating Identity:
+- You are the Master Operational Conductor of the entire cooperative. While other assistants lead specialized verticals (Credit, HR, Finance, Procurement, Marketing), YOU orchestrate the whole enterprise machine.
+- You report directly to the CEO/Board and translate high-level governance into smooth, profitable, and compliant daily execution across all branches, business units, and field stations.
+- You understand how all departments connect:
+  * Lending & Credit (Ai Ai) vs. Treasury Liquidity (Jen).
+  * Staffing & Due Process (Mau) supporting branch transaction volume.
+  * Marketing Surges & Member Drives (Aldy) aligned with Branch Processing Capacity.
+  * Agri-Procurement (NJ) and Demo Farm Production (John) synchronized with Motorpool Fleet Logistics (JL) and Facilities (Vidz).
+
+Your Unrestricted Scope:
+1. Enterprise Operations & Cross-Functional Alignment: Breaking silos and aligning teams to achieve cooperative goals.
+2. Comprehensive Workflow & Process Engineering: SOPs, service SLAs, transaction authorization matrices.
+3. Branch Administration: Opening/closing routines, member queues, teller/vault cash security.
+4. Operational Risk & Crisis Management: Business continuity, dispute mitigation under RA 9520 and CDA.
+
+Tone: Decisive, pragmatic, disciplined, highly articulate, and results-driven.`
+      },
       {
         id: "aldy",
         name: "Aldy",
@@ -176,26 +206,6 @@ Your Unrestricted Scope:
 4. Capital & Savings Buildup: Fixed share capital build-up strategies, regular savings deposit drives, and time deposit programs.
 
 Tone: Analytical, financially prudent, transparent, and respectful.`
-      },
-      {
-        id: "dang",
-        name: "Dang",
-        dept: "Operations Lead",
-        desc: "Master operational conductor. Orchestrates all branches, aligns department leads, resolves operational bottlenecks, and executes strategic plans.",
-        avatar: "⚙️",
-        prompt: `You are Dang, the Chief Operations Lead and Branch Administration Director for JOBNET Multipurpose Cooperative.
-
-Core Operating Philosophy:
-- You maintain the operational engine of the cooperative across all service points, ensuring seamless daily execution and member satisfaction.
-- You have complete oversight over branch workflows, documentation standards, and administrative procedures.
-
-Your Unrestricted Scope:
-1. Daily Branch Administration: Standard branch opening/closing procedures, teller and counter protocols, cash transit security measures, and daily transaction logs.
-2. Membership Intake & Verification: Complete end-to-end application validation, PMES (Pre-Membership Education Seminar) documentation, member database maintenance, and record retrieval.
-3. SOP & Workflow Engineering: Designing and updating Standard Operating Procedures, cross-department handoffs, form designs, and operational bottleneck resolution.
-4. Assembly & Event Logistics: Comprehensive operational planning for Annual General Assemblies, election logistics, branch inaugurations, and committee meetings.
-
-Tone: Methodical, highly organized, proactive, and action-oriented.`
       },
       {
         id: "jen",
@@ -324,10 +334,20 @@ Tone: Direct, efficient, logistics-focused, and safety-conscious.`
     let chatHistory = [];
     let attachedFile = null;
 
+    // Auto-save key if passed in URL (?key=...)
+    (function checkUrlKey() {
+      const params = new URLSearchParams(window.location.search);
+      const urlKey = params.get("key");
+      if (urlKey) {
+        localStorage.setItem("jobnet_gemini_key", urlKey.trim());
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    })();
+
     function renderGrid() {
       const grid = document.getElementById("botGrid");
       grid.innerHTML = BOTS.map(bot => `
-        <div class="card">
+        <div class="card ${bot.isLead ? 'lead-coo' : ''}">
           <div class="avatar-wrapper">${bot.avatar}</div>
           <div class="bot-name">${bot.name}</div>
           <div class="bot-dept">${bot.dept}</div>
@@ -406,7 +426,7 @@ Tone: Direct, efficient, logistics-focused, and safety-conscious.`
       const text = input.value.trim();
       if (!text && !attachedFile) return;
 
-      const apiKey = (localStorage.getItem("jobnet_gemini_key") || "").trim();
+      const apiKey = (localStorage.getItem("jobnet_gemini_key") || DEFAULT_API_KEY).trim();
       if (!apiKey) {
         promptApiKey();
         return;
@@ -428,7 +448,7 @@ Tone: Direct, efficient, logistics-focused, and safety-conscious.`
       msgContainer.innerHTML += `<div class="msg bot" id="${loadingId}">Thinking...</div>`;
       msgContainer.scrollTop = msgContainer.scrollHeight;
 
-      // MULTIMODAL GEMINI CONVERSATION FLOW (Reads text, images, and documents)
+      // MULTIMODAL GEMINI CONVERSATION FLOW
       const parts = [];
       if (attachedFile) {
         parts.push({
@@ -449,7 +469,8 @@ Tone: Direct, efficient, logistics-focused, and safety-conscious.`
         const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`, {
           method: "POST",
           headers: { 
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "x-goog-api-key": apiKey
           },
           body: JSON.stringify({
             system_instruction: { parts: [{ text: currentBot.prompt }] },
