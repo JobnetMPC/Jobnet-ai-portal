@@ -15,25 +15,25 @@
       background-color: #0b0d10;
       color: #e5e7eb;
       min-height: 100vh;
-      padding: 2rem 1.5rem;
+      padding: 2.5rem 1.5rem;
     }
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      max-width: 1200px;
+      max-width: 1300px;
       margin: 0 auto 2.5rem;
       border-bottom: 1px solid #1f2937;
       padding-bottom: 1.25rem;
     }
     .brand-title {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: #ffffff;
       letter-spacing: 0.5px;
     }
     .brand-subtitle {
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       color: #9ca3af;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -58,9 +58,9 @@
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1.5rem;
-      max-width: 1200px;
+      max-width: 1300px;
       margin: 0 auto;
     }
     .card {
@@ -79,7 +79,7 @@
     }
     .avatar-wrapper {
       width: 100%;
-      height: 140px;
+      height: 120px;
       background: #1c2028;
       border-radius: 10px;
       display: flex;
@@ -135,7 +135,7 @@
       text-decoration: none;
       font-size: 0.78rem;
       font-weight: 600;
-      padding: 0.4rem 0.8rem;
+      padding: 0.4rem 0.85rem;
       border-radius: 7px;
       display: inline-flex;
       align-items: center;
@@ -153,97 +153,133 @@
   <header>
     <div>
       <div class="brand-title">JOBNET MULTIPURPOSE COOPERATIVE</div>
-      <div class="brand-subtitle">Team AI Assistant Portal</div>
+      <div class="brand-subtitle">Department AI Bot Directory</div>
     </div>
     <div class="badge">
       <div class="badge-dot"></div>
-      Active
+      10 Active Assistants
     </div>
   </header>
 
   <main class="grid">
 
-    <!-- Card 1: Marketing Specialist -->
+    <!-- 1. Aldy - Marketing Specialist -->
     <div class="card">
-      <div class="avatar-wrapper">
-        <span style="font-size: 3rem;">📢</span>
-      </div>
-      <div class="bot-name">Mark the Marketer</div>
-      <div class="bot-dept">Marketing & Communications</div>
-      <div class="bot-desc">
-        Drafts high-converting Facebook posts, community announcements, and Canva poster blueprints in official brand colors.
-      </div>
+      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">📢</span></div>
+      <div class="bot-name">Aldy</div>
+      <div class="bot-dept">Marketing Specialist</div>
+      <div class="bot-desc">Creates Facebook campaign copy, member recruitment promos, community flyers, and Canva design briefs in official brand colors.</div>
       <div class="card-footer">
-        <div class="tags">
-          <span class="tag">Posters</span>
-          <span class="tag">Copy</span>
-        </div>
-        <a href="https://aistudio.google.com" target="_blank" class="open-btn">
-          Open &rarr;
-        </a>
+        <div class="tags"><span class="tag">Posters</span><span class="tag">Campaigns</span></div>
+        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
       </div>
     </div>
 
-    <!-- Card 2: HR Policy Guide -->
+    <!-- 2. Mau - HR Guide -->
     <div class="card">
-      <div class="avatar-wrapper">
-        <span style="font-size: 3rem;">👥</span>
-      </div>
-      <div class="bot-name">Hannah the HR Guide</div>
-      <div class="bot-dept">Human Resources & Onboarding</div>
-      <div class="bot-desc">
-        Answers questions about leave policies, employee onboarding, code of conduct, and workplace memos.
-      </div>
+      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">👥</span></div>
+      <div class="bot-name">Mau</div>
+      <div class="bot-dept">HR Guide</div>
+      <div class="bot-desc">Assists with employee handbook inquiries, leave balance policies, staff onboarding, memos, and labor compliance workflows.</div>
       <div class="card-footer">
-        <div class="tags">
-          <span class="tag">Policy</span>
-          <span class="tag">Leaves</span>
-        </div>
-        <a href="https://aistudio.google.com" target="_blank" class="open-btn">
-          Open &rarr;
-        </a>
+        <div class="tags"><span class="tag">Policies</span><span class="tag">Onboarding</span></div>
+        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
       </div>
     </div>
 
-    <!-- Card 3: Finance & Loan Specialist -->
+    <!-- 3. Ai Ai - Credit & Savings Specialist -->
     <div class="card">
-      <div class="avatar-wrapper">
-        <span style="font-size: 3rem;">📊</span>
-      </div>
-      <div class="bot-name">Finn the Finance Advisor</div>
-      <div class="bot-dept">Finance & Lending</div>
-      <div class="bot-desc">
-        Explains member loan products, interest amortization tables, patronage refund mechanics, and dividend rules.
-      </div>
+      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">💳</span></div>
+      <div class="bot-name">Ai Ai</div>
+      <div class="bot-dept">Credit & Savings Specialist</div>
+      <div class="bot-desc">Handles member loan evaluation criteria, savings plans, share capital buildup, amortization computation, and credit guidelines.</div>
       <div class="card-footer">
-        <div class="tags">
-          <span class="tag">Loans</span>
-          <span class="tag">Dividends</span>
-        </div>
-        <a href="https://aistudio.google.com" target="_blank" class="open-btn">
-          Open &rarr;
-        </a>
+        <div class="tags"><span class="tag">Loans</span><span class="tag">Savings</span></div>
+        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
       </div>
     </div>
 
-    <!-- Card 4: Operations & Member Services -->
+    <!-- 4. Dang - Operations Lead -->
     <div class="card">
-      <div class="avatar-wrapper">
-        <span style="font-size: 3rem;">⚙️</span>
-      </div>
-      <div class="bot-name">Ollie the Operations Lead</div>
-      <div class="bot-dept">Member Services & Admin</div>
-      <div class="bot-desc">
-        Assists with membership form verification, General Assembly notices, and committee workflow templates.
-      </div>
+      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">⚙️</span></div>
+      <div class="bot-name">Dang</div>
+      <div class="bot-dept">Operations Lead</div>
+      <div class="bot-desc">Coordinates daily branch procedures, member application verifications, operational logistics, and general admin workflows.</div>
       <div class="card-footer">
-        <div class="tags">
-          <span class="tag">Forms</span>
-          <span class="tag">Admin</span>
-        </div>
-        <a href="https://aistudio.google.com" target="_blank" class="open-btn">
-          Open &rarr;
-        </a>
+        <div class="tags"><span class="tag">Admin</span><span class="tag">Logistics</span></div>
+        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 5. Jen - Financial Advisor -->
+    <div class="card">
+      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">📈</span></div>
+      <div class="bot-name">Jen</div>
+      <div class="bot-dept">Financial Advisor</div>
+      <div class="bot-desc">Advises on cooperative financial health, patronage refund distributions, dividend calculations, and strategic budgeting.</div>
+      <div class="card-footer">
+        <div class="tags"><span class="tag">Dividends</span><span class="tag">Budget</span></div>
+        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 6. NJ - Nut Buying (Coconut Buying) -->
+    <div class="card">
+      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">🥥</span></div>
+      <div class="bot-name">NJ</div>
+      <div class="bot-dept">Nut Buying (Coconut)</div>
+      <div class="bot-desc">Manages coconut procurement pricing, copra weight standards, moisture testing thresholds, buying receipts, and supplier logs.</div>
+      <div class="card-footer">
+        <div class="tags"><span class="tag">Procurement</span><span class="tag">Grading</span></div>
+        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 7. John - Demo Farm Expert -->
+    <div class="card">
+      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">🌱</span></div>
+      <div class="bot-name">John</div>
+      <div class="bot-dept">Demo Farm Expert</div>
+      <div class="bot-desc">Provides agricultural best practices, crop monitoring guidelines, organic fertilizer management, harvest schedules, and demo farm logs.</div>
+      <div class="card-footer">
+        <div class="tags"><span class="tag">Agri</span><span class="tag">Harvest</span></div>
+        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 8. Yong - Executive Advisor (CEO) -->
+    <div class="card">
+      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">🏛️</span></div>
+      <div class="bot-name">Yong</div>
+      <div class="bot-dept">Executive Advisor (CEO)</div>
+      <div class="bot-desc">Assists leadership with board resolutions, long-term strategic plans, partnership proposals, CDA compliance, and executive reviews.</div>
+      <div class="card-footer">
+        <div class="tags"><span class="tag">Governance</span><span class="tag">BOD</span></div>
+        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 9. Vidz - Engineering Services -->
+    <div class="card">
+      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">📐</span></div>
+      <div class="bot-name">Vidz</div>
+      <div class="bot-dept">Engineering Services</div>
+      <div class="bot-desc">Drafts technical scopes of work, facility maintenance checklists, equipment inspection logs, and cooperative infrastructure plans.</div>
+      <div class="card-footer">
+        <div class="tags"><span class="tag">Maintenance</span><span class="tag">Tech Specs</span></div>
+        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 10. JL - Motorpool Services Guide -->
+    <div class="card">
+      <div class="avatar-wrapper"><span style="font-size: 2.8rem;">🚚</span></div>
+      <div class="bot-name">JL</div>
+      <div class="bot-dept">Motorpool Services Guide</div>
+      <div class="bot-desc">Coordinates fleet dispatch schedules, vehicle preventive maintenance, fuel consumption auditing, and driver trip logs.</div>
+      <div class="card-footer">
+        <div class="tags"><span class="tag">Fleet</span><span class="tag">Maintenance</span></div>
+        <a href="https://chatgpt.com" target="_blank" class="open-btn">Open &rarr;</a>
       </div>
     </div>
 
