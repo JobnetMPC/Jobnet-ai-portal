@@ -381,7 +381,9 @@ Tone: Direct, efficient, logistics-focused, and safety-conscious.`
       try {
         const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Content-Type": "application/json"
+          },
           body: JSON.stringify({
             system_instruction: { parts: [{ text: currentBot.prompt }] },
             contents: chatHistory
@@ -389,12 +391,18 @@ Tone: Direct, efficient, logistics-focused, and safety-conscious.`
         });
 
         const data = await res.json();
-        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "No response received. Please check your API key.";
+        
+        if (data.error) {
+          document.getElementById(loadingId).textContent = `Google API Error (${data.error.code || 'Issue'}): ${data.error.message}`;
+          return;
+        }
+
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "No response received. Check model availability or quota.";
 
         document.getElementById(loadingId).textContent = reply;
         chatHistory.push({ role: "model", parts: [{ text: reply }] });
       } catch (err) {
-        document.getElementById(loadingId).textContent = "Error connecting to Gemini. Please verify your API key.";
+        document.getElementById(loadingId).textContent = "Network error connecting to Gemini API. Please check your internet connection.";
       }
       msgContainer.scrollTop = msgContainer.scrollHeight;
     }
